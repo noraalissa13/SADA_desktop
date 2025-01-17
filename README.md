@@ -74,7 +74,7 @@
         <li>Clone this repository:</li>
         <pre><code>git clone https://github.com/noraalissa13/SADA_desktop.git</code></pre>
         <li>Navigate to the backend directory:</li>
-        <pre><code>cd sada/backend</code></pre>
+        <pre><code>cd SADA_desktop/backend</code></pre>
         <li>Install dependencies:</li>
         <pre><code>pip install -r requirements.txt</code></pre>
         <li>Run the Quart server:</li>
@@ -84,7 +84,7 @@
     <ol>
         <li>Ensure Flutter is installed and set up on your machine.</li>
         <li>Navigate to the frontend directory:</li>
-        <pre><code>cd sada/frontend</code></pre>
+        <pre><code>cd SADA_desktop</code></pre>
         <li>Install dependencies:</li>
         <pre><code>flutter pub get</code></pre>
         <li>Run the Flutter app:</li>
