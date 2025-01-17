@@ -1,16 +1,2 @@
-# sada_desktop
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# SADA_desktop
+SADA is a BCI-based system that uses EEG data from Muse headbands to monitor and analyze students' attention levels in real time. It uses machine learning models and interactive visualizations to enhance academic outcomes and improve learning outcomes.
