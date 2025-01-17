@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SADA: A BCI-Based Student Attention Deficit Alert and Profiling System</title>
 </head>
 <body>
     <h1>SADA: A BCI-Based Student Attention Deficit Alert and Profiling System</h1>
@@ -13,13 +12,51 @@
         actionable insights to foster self-awareness and improve learning outcomes.
     </p>
     <h2>Features</h2>
-    <ul>
-        <li>Real-time EEG data streaming and preprocessing from Muse headbands.</li>
-        <li>Attention deficit detection using Long Short-Term Memory (LSTM) models.</li>
-        <li>Interactive and dynamic visualization of attention levels.</li>
-        <li>Backend built with Python and Quart for efficient data processing.</li>
-        <li>Flutter-based frontend for mobile and desktop platforms.</li>
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>Description</th>
+                <th>Functionality</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Real-time EEG Data Streaming</td>
+                <td>Streams EEG data from Muse headbands for immediate analysis.</td>
+                <td>Facilitates live data collection and preprocessing for accurate monitoring.</td>
+            </tr>
+            <tr>
+                <td>Attention Deficit Detection</td>
+                <td>Uses Long Short-Term Memory (LSTM) models to analyze brain activity.</td>
+                <td>Identifies patterns indicative of attention deficits with high accuracy.</td>
+            </tr>
+            <tr>
+                <td>Interactive Visualization</td>
+                <td>Provides dynamic visual feedback on attention levels in real time.</td>
+                <td>Enhances user engagement and understanding of their attention states.</td>
+            </tr>
+            <tr>
+                <td>Python and Quart Backend</td>
+                <td>Processes EEG data efficiently with a robust backend architecture.</td>
+                <td>Ensures smooth data handling and supports machine learning pipelines.</td>
+            </tr>
+            <tr>
+                <td>Flutter-based Frontend</td>
+                <td>Cross-platform interface for both mobile and desktop applications.</td>
+                <td>Delivers a seamless and user-friendly experience across devices.</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>User Interface</h2>
+    Main Page
+    <br>
+    <img width="600" alt="Sada Main Page" src="https://github.com/user-attachments/assets/f25c5ead-c206-401f-9eb6-641e0bcd7aeb">
+    <br> 
+    Connect Device Page
+    <br>
+    <img width="600" alt="Sada Main Page" src="https://github.com/user-attachments/assets/56e97754-798c-4a00-9886-a98ef022f207">
+    <br>
     <h2>System Architecture</h2>
     <p>
         The SADA system is composed of multiple modules working together seamlessly:
@@ -35,7 +72,7 @@
     <h3>Backend Setup</h3>
     <ol>
         <li>Clone this repository:</li>
-        <pre><code>git clone https://github.com/your-username/sada.git</code></pre>
+        <pre><code>git clone https://github.com/noraalissa13/SADA_desktop.git</code></pre>
         <li>Navigate to the backend directory:</li>
         <pre><code>cd sada/backend</code></pre>
         <li>Install dependencies:</li>
@@ -62,7 +99,7 @@
     </p>   
     <h2>Results</h2>
     <p>
-        The SADA system achieved a classification accuracy of <strong>XX%</strong> using the LSTM model, demonstrating its effectiveness in detecting attention deficits. 
+        The SADA system achieved a classification accuracy of <strong>98%</strong> using the LSTM model, demonstrating its effectiveness in detecting attention deficits. 
         The real-time visualization feature provides an intuitive way for users to monitor attention levels dynamically.
     </p>
     <h2>Technologies Used</h2>
@@ -72,17 +109,22 @@
         <li>Muse SDK</li>
         <li>Machine Learning (LSTM)</li>
     </ul>
-    <h2>Contributing</h2>
-    <p>
-        Contributions are welcome! Please fork this repository and submit a pull request with your changes.
-    </p> 
+    <h2>Future Work</h2>
+    <ul>
+        <li>Implement alert generation when attention levels is "Low".</li>
+        <li>Integrate adaptive neurofeedback.</li>
+        <li>Incorporate user profiling and personalized learning.</li>
+    </ul>
     <h2>License</h2>
     <p>
         This project is licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.
     </p>
     <h2>Contact</h2>
-    <p>
-        For questions or feedback, feel free to reach out to <a href="mailto:your-email@example.com">your-email@example.com</a>.
-    </p>
+    <p>For inquiries, contact:</p>
+    <ul>
+        <li><strong>Developers:</strong> <br>1. Nora Alissa binti Ismail <br>2. Hayani Nazurah binti Hasram<br>3. Dini Oktarina Dwi Handayani, Asst. Prof. Ts. Dr.</li>
+        <li><strong>Email:</strong> <br>1. noraalissa13@gmail.com<br>2. hayaninazurah29@gmail.com<br>3. dinihandayani@iium.edu.my </li>
+        <li><strong>Institution:</strong> International Islamic University Malaysia</li>
+    </ul>
 </body>
 </html>
