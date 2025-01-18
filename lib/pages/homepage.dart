@@ -1,3 +1,11 @@
+// ignore_for_file: avoid_print
+// MADE BY: NORA ALISSA BINTI ISMAIL (2117862)
+// This file contains the implementation of the HomePage widget,
+// which is the main page of the application.
+// The HomePage widget displays the main content of the application,
+// including the attention level graph and buttons for starting and stopping the monitoring session.
+// The widget also communicates with the backend server to fetch attention levels and update the graph in real-time.
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,85 +25,57 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String displayText = "Monitor Your Study Session!";
-  bool isMonitoring = false;
-  Timer? _timer;
-  double elapsedSeconds = 0;
-  List<FlSpot> _dataPoints = [];
-  Timer? _graphUpdateTimer;
+  String displayText =
+      "Monitor Your Study Session!"; // Text displayed on the home page
+  bool isMonitoring =
+      false; // Boolean to track whether monitoring is in progress
+  Timer? _timer; // Timer to track elapsed time
+  double elapsedSeconds = 0; // Track the elapsed seconds for the session
+  List<FlSpot> _dataPoints = []; // List to store data points for the graph
+  Timer? _graphUpdateTimer; // Timer to periodically update the graph
   List<double> _attentionLevels =
       []; // List to store all fetched attention levels
-  int _dataPointCount = 0; // Track the number of data points added
 
   @override
   void initState() {
     super.initState();
   }
 
-  // Modify fetchAttentionLevel to fetch all attention levels at once
+  // Fetches attention level from the backend server
   Future<void> fetchAttentionLevel() async {
     try {
-      final response =
-          await http.get(Uri.parse('http://127.0.0.1:5000/attention_level'));
+      final response = await http.get(Uri.parse(
+          'http://127.0.0.1:5000/attention_level')); // API endpoint to get attention levels
 
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
+        final data = jsonDecode(response.body); // Decode the JSON response
         print('Response data: $data'); // Debugging print statement
+        final attentionLevel =
+            data['attention_level']; // Get the current attention level
 
+        // Check if there are multiple attention levels in the response
         if (data['attention_levels'] != null &&
             data['attention_levels'].isNotEmpty) {
           // Save all attention levels to the list
           _attentionLevels = List<double>.from(data['attention_levels']
               .map((level) => level.toDouble())); // Convert to double
+          _dataPoints.add(FlSpot(_dataPoints.length.toDouble(),
+              attentionLevel)); // Add the new data point to the graph
+
+          // Keep only the last 10 data points for better visualization
+          if (_dataPoints.length > 10) {
+            _dataPoints.removeAt(0);
+          }
+
+          // Normalize X-axis values to keep them within the window (0 to 9)
+          for (int i = 0; i < _dataPoints.length; i++) {
+            _dataPoints[i] = FlSpot(i.toDouble(), _dataPoints[i].y);
+          }
 
           print(
               'Fetched attention levels: $_attentionLevels'); // Debugging print statement
         } else {
           print('No attention level found');
-        }
-      } else {
-        print('Failed to fetch attention level: ${response.body}');
-      }
-    } catch (e) {
-      print('Error fetching attention level: $e');
-    }
-  }
-
-  Future<void> generateAttentionLevel() async {
-    try {
-      final response =
-          await http.get(Uri.parse('http://127.0.0.1:5000/generate_attention'));
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        final attentionLevel = data['attention_level'];
-
-        // Check if attentionLevel is not null and is a valid number
-        if (attentionLevel != null && attentionLevel is double) {
-          setState(() {
-            // Check if it's the 10th data point and add 0.5
-            if (_dataPointCount % 10 == 0) {
-              // Add a value of 0.5 for this 5th data point
-              _dataPoints.add(FlSpot(_dataPoints.length.toDouble(), 0.5));
-            } else {
-              // Add the regular attention level data point
-              _dataPoints
-                  .add(FlSpot(_dataPoints.length.toDouble(), attentionLevel));
-            }
-
-            // Keep only the last 10 data points for better visualization
-            if (_dataPoints.length > 10) {
-              _dataPoints.removeAt(0);
-            }
-
-            // Normalize X-axis values to keep them within the window (0 to 9)
-            for (int i = 0; i < _dataPoints.length; i++) {
-              _dataPoints[i] = FlSpot(i.toDouble(), _dataPoints[i].y);
-            }
-
-            _dataPointCount++;
-          });
-        } else {
-          print('Invalid attention level: $attentionLevel');
         }
       } else {
         print('Failed to fetch attention level: ${response.body}');
@@ -124,39 +104,41 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  // Update graph every 3 seconds by iterating over the attention levels
+  /// Start the monitoring session and update the graph every 3 seconds
   void startMonitoring() {
     setState(() {
-      displayText = "Monitoring Attention Level...";
-      isMonitoring = true;
-      elapsedSeconds = 0;
+      displayText = "Monitoring Attention Level..."; // Update display text
+      isMonitoring = true; // Set monitoring status to true
+      elapsedSeconds = 0; // Reset elapsed time
     });
 
+    // Start a timer to update elapsed time every second
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        elapsedSeconds++;
+        elapsedSeconds++; // Increment elapsed time
       });
     });
 
-    // Start polling the backend every 3 seconds
+    // Start polling the backend every 3 seconds to fetch attention level data
     _graphUpdateTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
-      generateAttentionLevel();
+      fetchAttentionLevel(); // Fetch attention level data
     });
   }
 
-  // Stop monitoring and reset
+  // Stop the monitoring session and reset the state
   void stopMonitoring() {
     setState(() {
-      _timer?.cancel();
-      _graphUpdateTimer?.cancel();
-      isMonitoring = false;
-      elapsedSeconds = 0;
-      displayText = "Monitor Your Study Session!";
+      _timer?.cancel(); // Cancel the elapsed time timer
+      _graphUpdateTimer?.cancel(); // Cancel the graph update timer
+      isMonitoring = false; // Set monitoring status to false
+      elapsedSeconds = 0; // Reset elapsed time
+      displayText = "Monitor Your Study Session!"; // Reset display text
       _dataPoints.clear(); // Clear graph data
     });
 
-    stopRecording();
+    stopRecording(); // Stop recording EEG data
 
+    // Show dialog box indicating the session is complete
     showDialog(
       context: context,
       builder: (context) {
@@ -189,7 +171,7 @@ class _HomePageState extends State<HomePage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(); // Close the dialog
               },
               child: const Text("OK"),
             ),
@@ -202,12 +184,15 @@ class _HomePageState extends State<HomePage> {
   // Build the UI for the HomePage
   @override
   Widget build(BuildContext context) {
-    final connectionState = Provider.of<DeviceConnectionState>(context);
+    final connectionState = Provider.of<DeviceConnectionState>(
+        context); // Get the connection state from the provider
     return Scaffold(
       drawer: const NavBar(),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(132, 80, 227, 195),
+        backgroundColor:
+            const Color.fromARGB(132, 80, 227, 195), // AppBar background color
         actions: [
+          // Button to navigate to the ConnectDevicePage to manage device connections
           IconButton(
             icon: const Icon(Icons.bluetooth_rounded),
             onPressed: () {
@@ -235,6 +220,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              // Display the current text for monitoring status
               Text(
                 displayText,
                 style: const TextStyle(
@@ -243,37 +229,43 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               const SizedBox(height: 20),
+              // Show the "Start" button if monitoring is not active
               if (!isMonitoring)
                 ButtonWidget(
                   text: "Start",
                   onClicked: () async {
+                    // Check if the EEG headset is connected before starting the session
                     if (!connectionState.bluetoothConnected) {
-                      showBluetoothDialog();
+                      showBluetoothDialog(); // Show dialog if Bluetooth is not connected
                     } else {
-                      startMonitoring();
+                      startMonitoring(); // Start monitoring if Bluetooth is connected
                     }
                   },
                 ),
+              // Show the monitoring interface if monitoring is active
               if (isMonitoring) ...[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    // Display the elapsed time
                     Text(
                       "Time Elapsed: ${Duration(seconds: elapsedSeconds.toInt()).toString().split('.').first}",
                       style: const TextStyle(fontSize: 18),
                     ),
                     const SizedBox(width: 20),
+                    // Stop button to stop monitoring
                     ElevatedButton(
                       onPressed: stopMonitoring,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
+                        backgroundColor:
+                            Colors.red, // Red color for the stop button
                       ),
                       child: const Text("Stop"),
                     ),
                   ],
                 ),
                 const SizedBox(height: 20),
-                // Display the attention graph
+                // Display the attention level graph
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white, // Background color of the container
