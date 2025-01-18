@@ -4,6 +4,11 @@ import threading
 from muselsl import stream  # Importing MuseLSL library for EEG streaming
 from pylsl import StreamInlet, resolve_streams  # Importing LSL (Lab Streaming Layer) libraries
 
+##HAYANI NAZURAH HASRAM 2117628
+##NORA ALISSA BINTI ISMAIL 2117862
+
+##This python script is to record and save raw EEG data to a csv file for project SADA.
+
 class EEGRecorder:
     def __init__(self, filename="eegdata.csv"):
         """
