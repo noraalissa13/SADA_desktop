@@ -115,10 +115,6 @@
         <li>Integrate adaptive neurofeedback.</li>
         <li>Incorporate user profiling and personalized learning.</li>
     </ul>
-    <h2>License</h2>
-    <p>
-        This project is licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.
-    </p>
     <h2>Contact</h2>
     <p>For inquiries, contact:</p>
     <ul>
@@ -126,5 +122,12 @@
         <li><strong>Email:</strong> <br>1. noraalissa13@gmail.com<br>2. hayaninazurah29@gmail.com<br>3. dinihandayani@iium.edu.my </li>
         <li><strong>Institution:</strong> International Islamic University Malaysia</li>
     </ul>
+    <h2>License</h2>
+    <p>
+        All rights reserved. You may not modify, distribute, or create derivative works based on this code without explicit permission.
+        <br>
+        © 2025 Nora Alissa Ismail
+    </p>
+
 </body>
 </html>
