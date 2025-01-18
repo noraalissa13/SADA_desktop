@@ -1,5 +1,4 @@
 # MADE BY: NORA ALISSA BINTI ISMAIL (2117862)
-# This file contains functions to save and read EEG data from Firestore.
 
 import firebase_admin
 from firebase_admin import credentials, firestore
